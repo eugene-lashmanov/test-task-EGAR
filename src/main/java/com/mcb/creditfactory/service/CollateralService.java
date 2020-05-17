@@ -15,10 +15,11 @@ import java.util.Optional;
 public class CollateralService {
 
     @Autowired
-    private CarService carService;
+    private AirplaneService airplaneService;
 
     @Autowired
-    private AirplaneService airplaneService;
+    private CarService carService;
+
 
     public Long saveCollateral(Collateral object) {
         if (object instanceof CarDto) {

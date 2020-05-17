@@ -12,4 +12,10 @@ import java.time.LocalDate;
         @JsonSubTypes.Type(value = CarDto.class)
 })
 public interface Collateral {
+    BigDecimal getValue();
+    Short getYear();
+    default LocalDate getDate() {
+        return LocalDate.now();
+    }
+    CollateralType getType();
 }
