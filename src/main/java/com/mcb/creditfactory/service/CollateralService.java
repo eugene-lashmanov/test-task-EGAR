@@ -24,10 +24,10 @@ public class CollateralService {
     public Long saveCollateral(Collateral object) {
         if (object instanceof CarDto) {
             CarDto carDto = (CarDto) object;
-            return saveProcessing1(carDto);
+            return saveProcessingForCar(carDto);
         } else if (object instanceof AirplaneDto) {
             AirplaneDto airplaneDto = (AirplaneDto) object;
-            return saveProcessing2(airplaneDto);
+            return saveProcessingForAirplane(airplaneDto);
         }
         return null;
     }
@@ -35,15 +35,15 @@ public class CollateralService {
     public Collateral getInfo(Collateral object) {
         if (object instanceof CarDto) {
             CarDto carDto = (CarDto) object;
-            return infoProcessing1(carDto);
+            return infoProcessingForCar(carDto);
         } else if (object instanceof AirplaneDto) {
             AirplaneDto airplaneDto = (AirplaneDto) object;
-            return infoProcessing2(airplaneDto);
+            return infoProcessingForAirplane(airplaneDto);
         }
         return null;
     }
 
-    private Long saveProcessing1(CarDto carDto) {
+    private Long saveProcessingForCar(CarDto carDto) {
         boolean approved = carService.approve(carDto);
         if (!approved) {
             return null;
@@ -55,7 +55,7 @@ public class CollateralService {
                 .orElse(null);
     }
 
-    private Long saveProcessing2(AirplaneDto airplaneDto) {
+    private Long saveProcessingForAirplane(AirplaneDto airplaneDto) {
         boolean approved = airplaneService.approve(airplaneDto);
         if (!approved) {
             return null;
@@ -67,7 +67,7 @@ public class CollateralService {
                 .orElse(null);
     }
 
-    private Collateral infoProcessing1(CarDto carDto) {
+    private Collateral infoProcessingForCar(CarDto carDto) {
         return Optional.of(carDto)
                 .map(carService::fromDto)
                 .map(carService::getId)
@@ -76,7 +76,7 @@ public class CollateralService {
                 .orElse(null);
     }
 
-    private Collateral infoProcessing2(AirplaneDto airplaneDto) {
+    private Collateral infoProcessingForAirplane(AirplaneDto airplaneDto) {
         return Optional.of(airplaneDto)
                 .map(airplaneService::fromDto)
                 .map(airplaneService::getId)
