@@ -27,18 +27,16 @@ create table AIRPLANE
 create table CAR_VALUE
 (
     id             IDENTITY primary key,
-    date_time      TIMESTAMP NOT NULL,
-    assessed_value DEC(20)   NOT NULL,
-    id_car         INT       NOT NULL,
-    FOREIGN KEY (id_car) REFERENCES CAR (id)
+    date_time      DATETIME NOT NULL,
+    assessed_value DEC(20)  NOT NULL,
+    id_car         INT      NOT NULL
 );
 
 create table AIRPLANE_VALUE
 (
     id             IDENTITY primary key,
-    date_time      TIMESTAMP,
-    assessed_value DEC(20),
-    id_airplane    INT,
-    FOREIGN KEY (id_airplane) REFERENCES AIRPLANE (id)
+    date_time      DATETIME NOT NULL,
+    assessed_value DEC(20)  NOT NULL,
+    id_airplane    INT      NOT NULL
 );
 

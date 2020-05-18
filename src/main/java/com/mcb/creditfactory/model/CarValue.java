@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -19,7 +20,8 @@ public class CarValue {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDate date;
+    @Column(name = "date_time")
+    private LocalDateTime dateTime;
 
     @Column(name = "assessed_value")
     private BigDecimal value;
@@ -28,6 +30,7 @@ public class CarValue {
     private Long carId;
 
     public CarValue(BigDecimal value, Long carId) {
+        this.dateTime = LocalDateTime.now();
         this.value = value;
         this.carId = carId;
     }

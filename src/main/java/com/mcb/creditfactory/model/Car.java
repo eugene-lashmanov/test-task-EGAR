@@ -22,4 +22,11 @@ public class Car {
 
     @Column(name = "year_of_issue")
     private Short year;
+
+    public Car(String brand, String model, Double power, Short year) {
+        this.brand = brand;
+        this.model = model;
+        this.power = power;
+        this.year = year;
+    }
 }

@@ -11,6 +11,6 @@ import java.util.List;
 public interface CarValueRepository extends JpaRepository<CarValue, Long> {
 
     @Modifying
-    @Query("SELECT c FROM CarValue c WHERE c.carId=:carId ORDER BY c.date DESC")
+    @Query("SELECT c FROM CarValue c WHERE c.carId=:carId ORDER BY c.dateTime DESC")
     List<CarValue> findAllByCarId(@Param("carId") Long id);
 }

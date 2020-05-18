@@ -6,6 +6,7 @@ import com.mcb.creditfactory.model.Car;
 import com.mcb.creditfactory.model.CarValue;
 import com.mcb.creditfactory.repository.CarRepository;
 import com.mcb.creditfactory.repository.CarValueRepository;
+import com.mcb.creditfactory.util.CarUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -66,7 +67,7 @@ public class CarServiceImpl implements CarService {
                 car.getModel(),
                 car.getPower(),
                 car.getYear(),
-                carValueRepository.findAllByCarId(car.getId()).stream().findFirst().get().getValue()
+                CarUtil.getLastValue(carValueRepository.findAllByCarId(car.getId()))
         );
     }
 
@@ -75,4 +76,8 @@ public class CarServiceImpl implements CarService {
         return car.getId();
     }
 
+    @Override
+    public Long getId(CarDto carDto) {
+        return carDto.getId();
+    }
 }

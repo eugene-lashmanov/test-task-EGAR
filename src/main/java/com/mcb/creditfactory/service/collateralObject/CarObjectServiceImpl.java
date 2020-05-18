@@ -36,26 +36,12 @@ public class CarObjectServiceImpl implements CollateralObjectService<Car, CarDto
 
     @Override
     public Car fromDto(CarDto carDto) {
-        return new Car(
-                carDto.getId(),
-                carDto.getBrand(),
-                carDto.getModel(),
-                carDto.getPower(),
-                carDto.getYear(),
-                carDto.getValue()
-        );
+        return null;
     }
 
     @Override
     public CarDto toDTO(Car entity) {
-        return new CarDto(
-                entity.getId(),
-                entity.getBrand(),
-                entity.getModel(),
-                entity.getPower(),
-                entity.getYear(),
-                entity.getValue()
-        );
+        return null;
     }
 
     @Override
