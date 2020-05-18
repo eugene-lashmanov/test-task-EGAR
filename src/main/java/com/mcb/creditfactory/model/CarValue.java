@@ -26,7 +26,7 @@ public class CarValue {
     @Column(name = "assessed_value")
     private BigDecimal value;
 
-    @Column(name = "id_car")
+    @Column(name = "car_id")
     private Long carId;
 
     public CarValue(BigDecimal value, Long carId) {

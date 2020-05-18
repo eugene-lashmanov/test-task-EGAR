@@ -47,15 +47,24 @@ public class CollateralObjectControllerTest {
     }
 
     @Test
-    public void save() throws Exception {
-        Assert.assertEquals(CAR, carService.load(CAR.getId()).orElse(null));
+    public void saveNotApproved() {
+        Assert.assertNull(collateralService.saveCollateral(CAR_DTO_NOT_APPROVED));
+    }
 
+    @Test
+    public void saveIsPresent() {
+        Assert.assertEquals(CAR, carService.load(CAR.getId()).orElse(null));
+    }
+
+    @Test
+    public void saveChangedValue() throws InterruptedException {
         Thread.sleep(1000);
         collateralService.estimate(CAR_DTO_TO_ESTIMATE);
         Assert.assertEquals(BigDecimal.valueOf(1500000), CarUtil.getLastValue(carValueRepository.findAllByCarId(CAR.getId())));
+    }
 
-        Assert.assertNull(collateralService.saveCollateral(CAR_DTO_NOT_APPROVED));
-
+    @Test
+    public void save() throws Exception {
         MvcResult mvcResult = mockMvc.perform(post("/collateral/save")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(getCarDtoAsJson()))

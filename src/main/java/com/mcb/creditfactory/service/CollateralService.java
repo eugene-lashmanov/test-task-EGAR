@@ -56,6 +56,7 @@ public class CollateralService {
 
     private Long estimateCar(CarDto carDto) {
         return Optional.of(carDto)
+                .map(carService::fromDto)
                 .map(carService::saveValue)
                 .map(carService::getId)
                 .orElse(null);
@@ -71,9 +72,9 @@ public class CollateralService {
             return null;
         }
         return Optional.of(carDto)
-                .map(carService::saveValue)
                 .map(carService::fromDto)
                 .map(carService::save)
+                .map(carService::saveValue)
                 .map(carService::getId)
                 .orElse(null);
     }

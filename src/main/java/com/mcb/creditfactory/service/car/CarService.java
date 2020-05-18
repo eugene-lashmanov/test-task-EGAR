@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface CarService {
     boolean approve(CarDto dto);
     Car save(Car car);
-    CarDto saveValue(CarDto carDto);
+    Car saveValue(Car car);
     Optional<Car> load(Long id);
     Car fromDto(CarDto dto);
     CarDto toDTO(Car car);

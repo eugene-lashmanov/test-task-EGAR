@@ -26,6 +26,8 @@ public class CarServiceImpl implements CarService {
     @Autowired
     private CarValueRepository carValueRepository;
 
+    private BigDecimal value;
+
     @Override
     public boolean approve(CarDto dto) {
         return approveService.approve(new CarAdapter(dto)) == 0;
@@ -37,10 +39,10 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public CarDto saveValue(CarDto carDto) {
-        CarValue carValue = new CarValue(carDto.getValue(), carDto.getId());
+    public Car saveValue(Car car) {
+        CarValue carValue = new CarValue(getValue(), car.getId());
         carValueRepository.save(carValue);
-        return carDto;
+        return car;
     }
 
     @Override
@@ -50,6 +52,7 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public Car fromDto(CarDto dto) {
+        value = dto.getValue();
         return new Car(
                 dto.getId(),
                 dto.getBrand(),
@@ -79,5 +82,9 @@ public class CarServiceImpl implements CarService {
     @Override
     public Long getId(CarDto carDto) {
         return carDto.getId();
+    }
+
+    public BigDecimal getValue() {
+        return value;
     }
 }
