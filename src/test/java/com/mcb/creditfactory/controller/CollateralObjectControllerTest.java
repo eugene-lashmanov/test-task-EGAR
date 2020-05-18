@@ -1,13 +1,11 @@
 package com.mcb.creditfactory.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mcb.creditfactory.dto.CarDto;
-import com.mcb.creditfactory.model.Car;
 import com.mcb.creditfactory.repository.CarValueRepository;
 import com.mcb.creditfactory.service.CollateralService;
 import com.mcb.creditfactory.service.car.CarService;
 import com.mcb.creditfactory.util.CarUtil;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +16,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 
+import static com.mcb.creditfactory.testdata.CarTestData.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -41,34 +41,54 @@ public class CollateralObjectControllerTest {
     @Autowired
     private CarValueRepository carValueRepository;
 
+    @Before
+    public void before() {
+        collateralService.saveCollateral(CAR_DTO);
+    }
+
     @Test
     public void save() throws Exception {
-        Car car = new Car(1L, "BMW", "x5", 220.0,
-                (Short.parseShort("2008")));
-        CarDto carDto = new CarDto(1L, "BMW", "x5", 220.0,
-                Short.parseShort("2008"), BigDecimal.valueOf(2000000));
-        collateralService.saveCollateral(carDto);
-        Assert.assertEquals(car, carService.load(car.getId()).orElse(null));
-        Assert.assertEquals(BigDecimal.valueOf(2000000), CarUtil.getLastValue(carValueRepository.findAllByCarId(car.getId())));
+        Assert.assertEquals(CAR, carService.load(CAR.getId()).orElse(null));
 
+        Thread.sleep(1000);
+        collateralService.estimate(CAR_DTO_TO_ESTIMATE);
+        Assert.assertEquals(BigDecimal.valueOf(1500000), CarUtil.getLastValue(carValueRepository.findAllByCarId(CAR.getId())));
 
-        String json = new ObjectMapper().writeValueAsString(carDto);
+        Assert.assertNull(collateralService.saveCollateral(CAR_DTO_NOT_APPROVED));
+
         MvcResult mvcResult = mockMvc.perform(post("/collateral/save")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(json))
+                .content(getCarDtoAsJson()))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andReturn();
-        String content = mvcResult.getResponse().getContentAsString();
-        Assert.assertEquals("1", content);
+        Assert.assertEquals("1", getAsString(mvcResult));
     }
 
     @Test
-    public void getInfo() {
-
+    public void getInfo() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(post("/collateral/info")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(getCarDtoAsJson()))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andReturn();
+        Assert.assertEquals("{\"type\":\"car\",\"id\":1,\"brand\":\"BMW\",\"model\":\"x5\",\"power\":220.0," +
+                "\"year\":2008,\"value\":2000000,\"type\":\"CAR\",\"date\":\"2020-05-18\"}", getAsString(mvcResult));
     }
 
     @Test
-    public void toEstimate() {
+    public void toEstimate() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(post("/collateral/estimate")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(getCarDtoAsJson()))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andReturn();
+        Assert.assertEquals("1", getAsString(mvcResult));
+    }
+
+    private String getAsString(MvcResult mvcResult) throws UnsupportedEncodingException {
+        return mvcResult.getResponse().getContentAsString();
     }
 }
