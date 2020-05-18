@@ -29,7 +29,7 @@ create table CAR_VALUE
     id             IDENTITY primary key,
     date_time      DATETIME NOT NULL,
     assessed_value DEC(20)  NOT NULL,
-    car_id         INT      NOT NULL,
+    car_id         LONG      NOT NULL,
     FOREIGN KEY (car_id) REFERENCES CAR (id) ON DELETE CASCADE
 );
 
@@ -38,7 +38,7 @@ create table AIRPLANE_VALUE
     id             IDENTITY primary key,
     date_time      DATETIME NOT NULL,
     assessed_value DEC(20)  NOT NULL,
-    airplane_id    INT      NOT NULL,
+    airplane_id    LONG      NOT NULL,
     FOREIGN KEY (airplane_id) REFERENCES AIRPLANE (id) ON DELETE CASCADE
 );
 
