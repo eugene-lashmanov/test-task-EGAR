@@ -3,10 +3,14 @@ package com.mcb.creditfactory.service.car;
 import com.mcb.creditfactory.dto.CarDto;
 import com.mcb.creditfactory.external.ExternalApproveService;
 import com.mcb.creditfactory.model.Car;
+import com.mcb.creditfactory.model.CarValue;
 import com.mcb.creditfactory.repository.CarRepository;
+import com.mcb.creditfactory.repository.CarValueRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
@@ -18,6 +22,9 @@ public class CarServiceImpl implements CarService {
     @Autowired
     private CarRepository carRepository;
 
+    @Autowired
+    private CarValueRepository carValueRepository;
+
     @Override
     public boolean approve(CarDto dto) {
         return approveService.approve(new CarAdapter(dto)) == 0;
@@ -26,6 +33,13 @@ public class CarServiceImpl implements CarService {
     @Override
     public Car save(Car car) {
         return carRepository.save(car);
+    }
+
+    @Override
+    public CarDto saveValue(CarDto carDto) {
+        CarValue carValue = new CarValue(carDto.getValue(), carDto.getId());
+        carValueRepository.save(carValue);
+        return carDto;
     }
 
     @Override
@@ -40,8 +54,7 @@ public class CarServiceImpl implements CarService {
                 dto.getBrand(),
                 dto.getModel(),
                 dto.getPower(),
-                dto.getYear(),
-                dto.getValue()
+                dto.getYear()
         );
     }
 
@@ -53,7 +66,7 @@ public class CarServiceImpl implements CarService {
                 car.getModel(),
                 car.getPower(),
                 car.getYear(),
-                car.getValue()
+                carValueRepository.findAllByCarId(car.getId()).stream().findFirst().get().getValue()
         );
     }
 
@@ -61,4 +74,5 @@ public class CarServiceImpl implements CarService {
     public Long getId(Car car) {
         return car.getId();
     }
+
 }

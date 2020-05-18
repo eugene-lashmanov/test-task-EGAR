@@ -43,12 +43,35 @@ public class CollateralService {
         return null;
     }
 
+    public Long estimate(Collateral object) {
+        if (object instanceof CarDto) {
+            CarDto carDto = (CarDto) object;
+            return estimateCar(carDto);
+        } else if (object instanceof AirplaneDto) {
+            AirplaneDto airplaneDto = (AirplaneDto) object;
+            return estimateAirplane(airplaneDto);
+        }
+        return null;
+    }
+
+    private Long estimateCar(CarDto carDto) {
+        return Optional.of(carDto)
+                .map(carService::saveValue)
+                .map(carService::getId)
+                .orElse(null);
+    }
+
+    private Long estimateAirplane(AirplaneDto airplaneDto) {
+        return null;
+    }
+
     private Long saveProcessingForCar(CarDto carDto) {
         boolean approved = carService.approve(carDto);
         if (!approved) {
             return null;
         }
         return Optional.of(carDto)
+                .map(carService::saveValue)
                 .map(carService::fromDto)
                 .map(carService::save)
                 .map(carService::getId)

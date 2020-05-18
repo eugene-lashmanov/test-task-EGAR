@@ -28,4 +28,10 @@ public class CollateralObjectController {
         Collateral info = service.getInfo(object);
         return info != null ? ResponseEntity.ok(info) : ResponseEntity.notFound().build();
     }
+
+    @PostMapping("/estimate")
+    public HttpEntity<Long> toEstimate(@RequestBody Collateral object) {
+        Long id = service.estimate(object);
+        return id != null ? ResponseEntity.ok(id) : ResponseEntity.badRequest().build();
+    }
 }
