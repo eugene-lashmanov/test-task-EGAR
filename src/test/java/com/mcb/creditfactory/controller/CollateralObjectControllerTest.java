@@ -18,6 +18,8 @@ import org.springframework.test.web.servlet.MvcResult;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import static com.mcb.creditfactory.testdata.CarTestData.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -83,7 +85,8 @@ public class CollateralObjectControllerTest {
                 .andDo(print())
                 .andReturn();
         Assert.assertEquals("{\"type\":\"car\",\"id\":1,\"brand\":\"BMW\",\"model\":\"x5\",\"power\":220.0," +
-                "\"year\":2008,\"value\":2000000,\"type\":\"CAR\",\"date\":\"2020-05-18\"}", getAsString(mvcResult));
+                "\"year\":2008,\"value\":2000000,\"type\":\"CAR\",\"date\":\"" + DateTimeFormatter.ofPattern("yyyy-MM-dd").format(LocalDate.now()) +
+    "\"}", getAsString(mvcResult));
     }
 
     @Test

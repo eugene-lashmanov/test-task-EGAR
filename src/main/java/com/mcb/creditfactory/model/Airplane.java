@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 
 @Data
 @NoArgsConstructor
@@ -29,8 +28,5 @@ public class Airplane {
     private Integer fuelCapacity;
 
     private Integer seats;
-
-    @Column(name = "assessed_value")
-    private BigDecimal value;
 
 }

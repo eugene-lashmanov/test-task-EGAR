@@ -5,7 +5,6 @@ import com.mcb.creditfactory.dto.CarDto;
 import com.mcb.creditfactory.dto.Collateral;
 import com.mcb.creditfactory.service.airplane.AirplaneService;
 import com.mcb.creditfactory.service.car.CarService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -14,12 +13,13 @@ import java.util.Optional;
 @Service
 public class CollateralService {
 
-    @Autowired
     private AirplaneService airplaneService;
-
-    @Autowired
     private CarService carService;
 
+    public CollateralService(AirplaneService airplaneService, CarService carService) {
+        this.airplaneService = airplaneService;
+        this.carService = carService;
+    }
 
     public Long saveCollateral(Collateral object) {
         if (object instanceof CarDto) {
@@ -29,7 +29,7 @@ public class CollateralService {
             AirplaneDto airplaneDto = (AirplaneDto) object;
             return saveProcessingForAirplane(airplaneDto);
         }
-        return null;
+        throw new IllegalArgumentException();
     }
 
     public Collateral getInfo(Collateral object) {
@@ -40,7 +40,7 @@ public class CollateralService {
             AirplaneDto airplaneDto = (AirplaneDto) object;
             return infoProcessingForAirplane(airplaneDto);
         }
-        return null;
+        throw new IllegalArgumentException();
     }
 
     public Long estimate(Collateral object) {
@@ -51,7 +51,7 @@ public class CollateralService {
             AirplaneDto airplaneDto = (AirplaneDto) object;
             return estimateAirplane(airplaneDto);
         }
-        return null;
+        throw new IllegalArgumentException();
     }
 
     private Long estimateCar(CarDto carDto) {
@@ -63,7 +63,11 @@ public class CollateralService {
     }
 
     private Long estimateAirplane(AirplaneDto airplaneDto) {
-        return null;
+        return Optional.of(airplaneDto)
+                .map(airplaneService::fromDto)
+                .map(airplaneService::saveValue)
+                .map(airplaneService::getId)
+                .orElse(null);
     }
 
     private Long saveProcessingForCar(CarDto carDto) {
@@ -87,6 +91,7 @@ public class CollateralService {
         return Optional.of(airplaneDto)
                 .map(airplaneService::fromDto)
                 .map(airplaneService::save)
+                .map(airplaneService::saveValue)
                 .map(airplaneService::getId)
                 .orElse(null);
     }

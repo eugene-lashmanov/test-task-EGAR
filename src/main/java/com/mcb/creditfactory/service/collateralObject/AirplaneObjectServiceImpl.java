@@ -5,6 +5,7 @@ import com.mcb.creditfactory.dto.AirplaneDto;
 import com.mcb.creditfactory.external.ExternalApproveService;
 import com.mcb.creditfactory.model.Airplane;
 import com.mcb.creditfactory.repository.AirplaneRepository;
+import com.mcb.creditfactory.service.CollateralObjectAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,23 +44,13 @@ public class AirplaneObjectServiceImpl implements CollateralObjectService<Airpla
                 airplaneDto.getManufacturer(),
                 airplaneDto.getYear(),
                 airplaneDto.getFuelCapacity(),
-                airplaneDto.getSeats(),
-                airplaneDto.getValue()
+                airplaneDto.getSeats()
         );
     }
 
     @Override
     public AirplaneDto toDTO(Airplane entity) {
-        return new AirplaneDto(
-                entity.getId(),
-                entity.getBrand(),
-                entity.getModel(),
-                entity.getManufacturer(),
-                entity.getYear(),
-                entity.getFuelCapacity(),
-                entity.getSeats(),
-                entity.getValue()
-        );
+        return null;
     }
 
     @Override

@@ -10,6 +10,8 @@ public interface AirplaneService {
 
     Airplane save(Airplane airplane);
 
+    Airplane saveValue(Airplane airplane);
+
     Optional<Airplane> load(Long id);
 
     Airplane fromDto(AirplaneDto dto);
@@ -17,4 +19,6 @@ public interface AirplaneService {
     AirplaneDto toDTO(Airplane airplane);
 
     Long getId(Airplane airplane);
+
+    Long getId(AirplaneDto airplaneDto);
 }

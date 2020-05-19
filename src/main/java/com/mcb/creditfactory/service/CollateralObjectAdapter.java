@@ -1,4 +1,4 @@
-package com.mcb.creditfactory.service.collateralObject;
+package com.mcb.creditfactory.service;
 
 
 import com.mcb.creditfactory.dto.Collateral;

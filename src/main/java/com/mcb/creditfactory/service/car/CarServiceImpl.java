@@ -6,31 +6,30 @@ import com.mcb.creditfactory.model.Car;
 import com.mcb.creditfactory.model.CarValue;
 import com.mcb.creditfactory.repository.CarRepository;
 import com.mcb.creditfactory.repository.CarValueRepository;
+import com.mcb.creditfactory.service.CollateralObjectAdapter;
 import com.mcb.creditfactory.util.CarUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
 public class CarServiceImpl implements CarService {
 
-    @Autowired
     private ExternalApproveService approveService;
-
-    @Autowired
     private CarRepository carRepository;
-
-    @Autowired
     private CarValueRepository carValueRepository;
-
     private BigDecimal value;
+
+    public CarServiceImpl(ExternalApproveService approveService, CarRepository carRepository, CarValueRepository carValueRepository) {
+        this.approveService = approveService;
+        this.carRepository = carRepository;
+        this.carValueRepository = carValueRepository;
+    }
 
     @Override
     public boolean approve(CarDto dto) {
-        return approveService.approve(new CarAdapter(dto)) == 0;
+        return approveService.approve(new CollateralObjectAdapter(dto)) == 0;
     }
 
     @Override
