@@ -1,8 +1,6 @@
 package com.mcb.creditfactory.testdata;
 
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mcb.creditfactory.dto.CarDto;
 import com.mcb.creditfactory.model.Car;
 
@@ -22,11 +20,7 @@ public class CarTestData {
     public static final CarDto CAR_DTO_TO_ESTIMATE = new CarDto(1L, "BMW", "x5", 220.0,
             Short.parseShort("2008"), BigDecimal.valueOf(1500000));
 
-    public static String getCarDtoAsJson() throws JsonProcessingException {
-        return new ObjectMapper().writeValueAsString(CAR_DTO);
-    }
-
-    private CarTestData(){
+    private CarTestData() {
 
     }
 

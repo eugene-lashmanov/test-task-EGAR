@@ -25,6 +25,7 @@ public class Airplane {
     @Column(name = "year_of_issue")
     private Short year;
 
+    @Column(name = "fuel_capacity")
     private Integer fuelCapacity;
 
     private Integer seats;
