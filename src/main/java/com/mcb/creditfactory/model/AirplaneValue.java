@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 @Table(name = "AIRPLANE_VALUE")
-public class AirplaneValue {
+public class AirplaneValue extends Value {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

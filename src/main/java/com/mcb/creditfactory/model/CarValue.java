@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 @Table(name = "CAR_VALUE")
-public class CarValue {
+public class CarValue extends Value {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

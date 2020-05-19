@@ -7,7 +7,7 @@ import com.mcb.creditfactory.model.CarValue;
 import com.mcb.creditfactory.repository.CarRepository;
 import com.mcb.creditfactory.repository.CarValueRepository;
 import com.mcb.creditfactory.service.CollateralObjectAdapter;
-import com.mcb.creditfactory.util.CarUtil;
+import com.mcb.creditfactory.Util;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -69,7 +69,7 @@ public class CarServiceImpl implements CarService {
                 car.getModel(),
                 car.getPower(),
                 car.getYear(),
-                CarUtil.getLastValue(carValueRepository.findAllByCarId(car.getId()))
+                Util.getLastValue(carValueRepository.findAllByCarId(car.getId()))
         );
     }
 

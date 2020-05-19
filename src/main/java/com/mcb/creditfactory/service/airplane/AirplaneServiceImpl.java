@@ -7,7 +7,7 @@ import com.mcb.creditfactory.model.AirplaneValue;
 import com.mcb.creditfactory.repository.AirplaneRepository;
 import com.mcb.creditfactory.repository.AirplaneValueRepository;
 import com.mcb.creditfactory.service.CollateralObjectAdapter;
-import com.mcb.creditfactory.util.AirplaneUtil;
+import com.mcb.creditfactory.Util;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -73,7 +73,7 @@ public class AirplaneServiceImpl implements AirplaneService {
                 airplane.getYear(),
                 airplane.getFuelCapacity(),
                 airplane.getSeats(),
-                AirplaneUtil.getLastValue(airplaneValueRepository.findAllByAirplaneId(airplane.getId()))
+                Util.getLastValue(airplaneValueRepository.findAllByAirplaneId(airplane.getId()))
         );
     }
 

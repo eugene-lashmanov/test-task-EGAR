@@ -3,7 +3,7 @@ package com.mcb.creditfactory.service;
 
 import com.mcb.creditfactory.repository.AirplaneValueRepository;
 import com.mcb.creditfactory.service.airplane.AirplaneService;
-import com.mcb.creditfactory.util.AirplaneUtil;
+import com.mcb.creditfactory.Util;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -48,6 +48,6 @@ public class AirplaneServiceTest {
     public void saveChangedValue() throws InterruptedException {
         Thread.sleep(1000);
         collateralService.estimate(AIRPLANE_DTO_TO_ESTIMATE);
-        Assert.assertEquals(BigDecimal.valueOf(240000000), AirplaneUtil.getLastValue(airplaneValueRepository.findAllByAirplaneId(AIRPLANE.getId())));
+        Assert.assertEquals(BigDecimal.valueOf(240000000), Util.getLastValue(airplaneValueRepository.findAllByAirplaneId(AIRPLANE.getId())));
     }
 }
